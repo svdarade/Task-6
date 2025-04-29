@@ -1,0 +1,41 @@
+-show database
+-use sakshi
+
+
+
+-- Create table
+CREATE TABLE online_sales_v2 (
+    order_id INT PRIMARY KEY,
+    order_date DATE,
+    amount DECIMAL(10, 2),
+    product_id INT,
+    name VARCHAR(100),
+    age INT
+);
+
+-- Insert sample data
+INSERT INTO online_sales_v2 (order_id, order_date, amount, product_id, name, age)
+VALUES 
+(1, '2023-01-15', 250.00, 101, 'Rutuja', 28),
+(2, '2023-01-18', 300.00, 102, 'Abhishek', 32),
+(3, '2023-02-20', 150.00, 103, 'Sakshi', 24),
+(4, '2023-02-25', 450.00, 104, 'Dhananjay', 29),
+(5, '2023-03-05', 500.00, 105, 'Rohit', 35),
+(6, '2023-04-10', 750.00, 106, 'Shreyash', 27),
+(7, '2023-04-12', 1000.00, 107, 'Arya', 30);
+
+
+-- Sales Trend Analysis Query
+SELECT 
+    EXTRACT(YEAR FROM order_date) AS year,
+    EXTRACT(MONTH FROM order_date) AS month,
+    SUM(amount) AS total_revenue,
+    COUNT(DISTINCT order_id) AS total_orders
+FROM 
+    online_sales_v2
+GROUP BY 
+    EXTRACT(YEAR FROM order_date),
+    EXTRACT(MONTH FROM order_date)
+ORDER BY 
+    year ASC,
+    month ASC;
